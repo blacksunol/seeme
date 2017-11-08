@@ -1,0 +1,21 @@
+<div class="row" ng-hide="coordinate._id">
+  <div class="col-md-6">
+      <h2>Create new coordinate</h2>
+  </div>
+</div>
+<div class="container">
+  <div>
+    <p>
+      <label>Latitude (required)</label>
+      <input id="name" class="form-control" type="text" ng-model="coordinate.latitude" required>
+    </p>
+    <p>
+      <label>Longitude (required)</label>
+      <input id="name" class="form-control" type="text" ng-model="coordinate.longitude" required>
+    </p>
+    <p>
+      <button style="margin-top:20px" class="btn btn-default" ng-click="saveCoordinate(coordinate)">Save</button>
+      <button style="margin-top:20px" class="btn btn-default" ng-click="back()">Back</button>
+    </p>
+  </div>
+</div>
