@@ -77,7 +77,7 @@ app.post("/coordinates", function(req, res) {
  *    DELETE: deletes song by id
  */
 
-app.get("/songs/:id", function(req, res) {
+app.get("/coordinates/:id", function(req, res) {
   db.collection(COORDINATES_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to get song");
