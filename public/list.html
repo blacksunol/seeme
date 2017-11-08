@@ -1,13 +1,13 @@
 <div class = "row">
   <div class="col-md-6">
     <h2>
-      Songs
+      Coordinates
     </h2>
   </div>
   <div class="col-md-3">
   </div>
   <div class="col-md-2">
-    <a style="margin-top:20px" class="btn btn-default" href="#/new/song">New</a>
+    <a style="margin-top:20px" class="btn btn-default" href="#/new/coordinate">New</a>
   </div>
   <div class="col-md-1">
   </div>
@@ -17,7 +17,7 @@
     <tbody>
       <tr ng-repeat="song in songs | orderBy:'number'" style="cursor:pointer">
         <td>
-          <a ng-href="#/song/{{song._id}}">{{ song.number }} {{ song.name }}</a>
+          <a ng-href="#/coordinate/{{coordniate._id}}">{{ coordinate.latitude }} {{ coordinate.longitude }}</a>
         </td>
       </tr>
     </tbody>

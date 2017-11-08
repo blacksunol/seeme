@@ -4,7 +4,7 @@ var bodyParser = require("body-parser");
 var mongodb = require("mongodb");
 var ObjectID = mongodb.ObjectID;
 
-var SONGS_COLLECTION = "songs";
+var COORDINATES_COLLECTION = "coodinates";
 
 var app = express();
 app.use(express.static(__dirname + "/public"));
@@ -44,8 +44,8 @@ function handleError(res, reason, message, code) {
  *    POST: creates a new song
  */
 
-app.get("/songs", function(req, res) {
-  db.collection(SONGS_COLLECTION).find({}).toArray(function(err, docs) {
+app.get("/coordinates", function(req, res) {
+  db.collection(COORDINATES_COLLECTION).find({}).toArray(function(err, docs) {
     if (err) {
       handleError(res, err.message, "Failed to get songs.");
     } else {
@@ -54,15 +54,15 @@ app.get("/songs", function(req, res) {
   });
 });
 
-app.post("/songs", function(req, res) {
-  var newSong = req.body;
-  newSong.createDate = new Date();
+app.post("/coordinates", function(req, res) {
+  var newCoordinate = req.body;
+  newCoordinate.createDate = new Date();
 
   if (!(req.body.number || req.body.name)) {
     handleError(res, "Invalid user input", "Must provide number or name of song.", 400);
   }
 
-  db.collection(SONGS_COLLECTION).insertOne(newSong, function(err, doc) {
+  db.collection(COORDINATES_COLLECTION).insertOne(newCoordinate, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to create new song.");
     } else {
@@ -78,7 +78,7 @@ app.post("/songs", function(req, res) {
  */
 
 app.get("/songs/:id", function(req, res) {
-  db.collection(SONGS_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
+  db.collection(COORDINATES_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to get song");
     } else {
@@ -87,11 +87,11 @@ app.get("/songs/:id", function(req, res) {
   });
 });
 
-app.put("/songs/:id", function(req, res) {
+app.put("/coordinates/:id", function(req, res) {
   var updateDoc = req.body;
   delete updateDoc._id;
 
-  db.collection(SONGS_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
+  db.collection(COORDINATES_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to update song");
     } else {
@@ -100,8 +100,8 @@ app.put("/songs/:id", function(req, res) {
   });
 });
 
-app.delete("/songs/:id", function(req, res) {
-  db.collection(SONGS_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
+app.delete("/coordinates/:id", function(req, res) {
+  db.collection(COORDINATES_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
     if (err) {
       handleError(res, err.message, "Failed to delete song");
     } else {
