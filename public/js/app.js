@@ -5,112 +5,113 @@ angular.module("contactsApp", ['ngRoute'])
                 templateUrl: "list.html",
                 controller: "ListController",
                 resolve: {
-                    songs: function(Songs) {
-                        return Songs.getSongs();
+                    
+                    s: function(Coordinates) {
+                        return Coordinates.getCoordinates();
                     }
                 }
             })
-            .when("/new/song", {
-                controller: "NewSongController",
-                templateUrl: "song-form.html"
+            .when("/new/coordinate", {
+                controller: "NewCoordinateController",
+                templateUrl: "coordinate-form.html"
             })
-            .when("/song/:songId", {
-                controller: "EditSongController",
-                templateUrl: "song.html"
+            .when("/coordinate/:coordinateId", {
+                controller: "EditCoordinateController",
+                templateUrl: "coordinate.html"
             })
             .otherwise({
                 redirectTo: "/"
             })
     })
-    .service("Songs", function($http) {
-        this.getSongs = function() {
-            return $http.get("/songs").
+    .service("Coordinates", function($http) {
+        this.getCoordinates = function() {
+            return $http.get("/coordinates").
                 then(function(response) {
                     return response;
                 }, function(response) {
-                    alert("Error finding songs.");
+                    alert("Error finding coordinates.");
                 });
         }
-        this.createSong = function(song) {
-            return $http.post("/songs", song).
+        this.createCoordinate = function(coordinate) {
+            return $http.post("/coordinates", coordinate).
                 then(function(response) {
                     return response;
                 }, function(response) {
-                    alert("Error creating song.");
+                    alert("Error creating coordinate.");
                 });
         }
-        this.getSong = function(songId) {
-            var url = "/songs/" + songId;
+        this.getCoordinate = function(coordinateId) {
+            var url = "/coordinates/" + coordinateId;
             return $http.get(url).
                 then(function(response) {
                     return response;
                 }, function(response) {
-                    alert("Error finding this song.");
+                    alert("Error finding this coordinate.");
                 });
         }
-        this.editSong = function(song) {
-            var url = "/songs/" + song._id;
-            console.log(song._id);
-            return $http.put(url, song).
+        this.editCoordinate = function(coordinate) {
+            var url = "/coordinates/" + coordinate._id;
+            console.log(coordinate._id);
+            return $http.put(url, coordinate).
                 then(function(response) {
                     return response;
                 }, function(response) {
-                    alert("Error editing this song.");
+                    alert("Error editing this coordinate.");
                     console.log(response);
                 });
         }
-        this.deleteSong = function(songId) {
-            var url = "/songs/" + songId;
+        this.deleteCoordinate = function(coordinateId) {
+            var url = "/coordinates/" + coordinateId;
             return $http.delete(url).
                 then(function(response) {
                     return response;
                 }, function(response) {
-                    alert("Error deleting this song.");
+                    alert("Error deleting this coordinate.");
                     console.log(response);
                 });
         }
     })
-    .controller("ListController", function(songs, $scope) {
-        $scope.songs = songs.data;
+    .controller("ListController", function(coordinates, $scope) {
+        $scope.coordinates = coordinates.data;
     })
-    .controller("NewSongController", function($scope, $location, Songs) {
+    .controller("NewCoordinateController", function($scope, $location, Coordinates) {
         $scope.back = function() {
             $location.path("#/");
         }
 
-        $scope.saveSong = function(song) {
-            Songs.createSong(song).then(function(doc) {
-                var songUrl = "/song/" + doc.data._id;
-                $location.path(songUrl);
+        $scope.saveCoordinate = function(coordinate) {
+            Coordinates.createCoordinate(coordinate).then(function(doc) {
+                var coordinateUrl = "/coordinate/" + doc.data._id;
+                $location.path(coordinateUrl);
             }, function(response) {
                 alert(response);
             });
         }
     })
-    .controller("EditSongController", function($scope, $routeParams, Songs) {
-        Songs.getSong($routeParams.songId).then(function(doc) {
-            $scope.song = doc.data;
+    .controller("EditCoordinateController", function($scope, $routeParams, Coordinates) {
+        Coordinates.getCoordinate($routeParams.coordinateId).then(function(doc) {
+            $scope.coordinate = doc.data;
         }, function(response) {
             alert(response);
         });
 
         $scope.toggleEdit = function() {
             $scope.editMode = true;
-            $scope.songFormUrl = "song-form.html";
+            $scope.coordinateFormUrl = "coordinate-form.html";
         }
 
         $scope.back = function() {
             $scope.editMode = false;
-            $scope.songFormUrl = "";
+            $scope.coordinateFormUrl = "";
         }
 
-        $scope.saveSong = function(song) {
-            Songs.editSong(song);
+        $scope.saveCoordinate = function(coordinate) {
+            Coordinates.editCoordinate(coordinate);
             $scope.editMode = false;
-            $scope.songFormUrl = "";
+            $scope.coordinateFormUrl = "";
         }
 
-        $scope.deleteSong = function(songId) {
-            Songs.deleteSong(songId);
+        $scope.deleteCoordinate = function(coordinateId) {
+            Coordinates.deleteCoordinate(coordinateId);
         }
     });
