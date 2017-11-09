@@ -58,8 +58,8 @@ app.post("/coordinates", function(req, res) {
   var newCoordinate = req.body;
   newCoordinate.createDate = new Date();
 
-  if (!(req.body.number || req.body.name)) {
-    handleError(res, "Invalid user input", "Must provide number or name of song.", 400);
+  if (!(req.body.latitude || req.body.longitude)) {
+    handleError(res, "Invalid user input", "Must provide latitude or longitude of coordinate.", 400);
   }
 
   db.collection(COORDINATES_COLLECTION).insertOne(newCoordinate, function(err, doc) {
