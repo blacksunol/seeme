@@ -15,7 +15,7 @@
 <div class="container">
   <table class="table table-hover">
     <tbody>
-      <tr ng-repeat="song in songs | orderBy:'number'" style="cursor:pointer">
+      <tr ng-repeat="coordinate in coordinates | orderBy:'latitude'" style="cursor:pointer">
         <td>
           <a ng-href="#/coordinate/{{coordinate._id}}">{{ coordinate.latitude }} {{ coordinate.longitude }}</a>
         </td>
