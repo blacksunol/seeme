@@ -5,8 +5,7 @@ angular.module("contactsApp", ['ngRoute'])
                 templateUrl: "list.html",
                 controller: "ListController",
                 resolve: {
-                    
-                    s: function(Coordinates) {
+                    coordinates: function(Coordinates) {
                         return Coordinates.getCoordinates();
                     }
                 }
